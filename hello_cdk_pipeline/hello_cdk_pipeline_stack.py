@@ -1,19 +1,17 @@
-from aws_cdk import (
-    # Duration,
-    Stack,
-    # aws_sqs as sqs,
-)
+import aws_cdk as cdk
 from constructs import Construct
+from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep
 
-class HelloCdkPipelineStack(Stack):
+
+class HelloCdkPipelineStack(cdk.Stack):
 
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        # The code that defines your stack goes here
+        synth_step = ShellStep("Synth",
+                               input=CodePipelineSource.git_hub(repo_string="iapostol-69/hello-cdk",branch="master"))
 
-        # example resource
-        # queue = sqs.Queue(
-        #     self, "HelloCdkPipelineQueue",
-        #     visibility_timeout=Duration.seconds(300),
-        # )
+        pipeline = CodePipeline(self,
+                                "Pipeline",
+                                pipeline_name="PipelineSameAccReg",
+                                commands=["npm install -g aws-cdk", "python -m pip install -r requirements.txt", "cdk synth"])
