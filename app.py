@@ -2,10 +2,11 @@
 import os
 import aws_cdk as cdk
 from hello_cdk_pipeline.hello_cdk_pipeline_stack import HelloCdkPipelineStack
+import aws_cdk.aws_iam as iam
 
 
 app = cdk.App()
-HelloCdkPipelineStack(app, "HelloCdkPipelineStack",
+HelloCdkPipelineStack(app, "MyPipelineStack",
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.
@@ -22,5 +23,8 @@ HelloCdkPipelineStack(app, "HelloCdkPipelineStack",
 
     # For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
     )
+
+
+
 
 app.synth()
